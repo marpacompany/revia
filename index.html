@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REVIA — Inteligencia autónoma para tu alojamiento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#FAFAF8;--card:#FFFFFF;--ink:#1A1B1E;--ink2:#52535A;--ink3:#9B9CA2;
+--acc:#1B6B5F;--acc2:#E6F2EF;--acc3:#145249;
+--yel:#EFE44A;--yel2:#FFFBE6;
+--line:#EDEDEB;--linef:#E0E0DC;
+--g:#2E8B57;--gsoft:#E4F3EA;--coral:#C95D42;--corsoft:#FAE9E3;
+--sand:#B08D4C;--sandsoft:#F5EDD9;
+--r:14px;--sh:0 1px 3px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+--shL:0 2px 6px rgba(0,0,0,.03),0 20px 60px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;font-weight:400;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+h1,h2,h3,.sg{font-family:'Space Grotesk',sans-serif;letter-spacing:-.03em}
+a{color:inherit;text-decoration:none}
+mark{background:var(--yel);padding:0 .15em;border-radius:2px}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nv{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;letter-spacing:-.04em}
+.logo em{font-style:normal;color:var(--acc)}
+.nlinks{display:flex;gap:2rem;align-items:center}
+.nlinks a{font-size:.86rem;font-weight:500;color:var(--ink2);transition:color .2s}
+.nlinks a:hover{color:var(--ink)}
+.nbtn{background:var(--ink);color:#fff !important;padding:.6rem 1.3rem;border-radius:50px;font-size:.84rem;font-weight:600;transition:all .2s;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.nbtn:hover{background:#000;transform:translateY(-1px)}
+@media(max-width:860px){.nlinks a:not(.nbtn){display:none}.nv{padding:0 1.2rem}}
+
+/* ── HERO ── */
+.hero{padding:4rem 2rem 3rem;max-width:1200px;margin:0 auto}
+.hero-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;align-items:center}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr;text-align:center}}
+.hero h1{font-size:clamp(2.4rem,5.5vw,3.8rem);font-weight:300;line-height:1.06;margin-bottom:1.3rem}
+.hero h1 b{font-weight:600}
+.hero p{font-size:1.1rem;font-weight:300;color:var(--ink2);max-width:480px;margin-bottom:2rem;line-height:1.75}
+@media(max-width:960px){.hero p{margin:0 auto 2rem}}
+/* HERO FLOW */
+.hflow{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.hf{display:flex;align-items:center;gap:.45rem;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;opacity:0;animation:fi .4s forwards}
+.hf:nth-child(1){animation-delay:0s}
+.hf:nth-child(3){animation-delay:.3s}
+.hf:nth-child(5){animation-delay:.6s}
+.hf:nth-child(7){animation-delay:.9s}
+.hf:nth-child(9){animation-delay:1.2s}
+.hf:nth-child(11){animation-delay:1.5s}
+.hfi{font-size:1.1rem;flex-shrink:0}
+.hft{font-size:.78rem;font-weight:500;color:var(--ink);line-height:1.35;max-width:140px}
+.hfa{color:var(--acc);font-weight:700;font-size:.9rem;opacity:0;animation:fi .3s forwards}
+.hfa:nth-child(2){animation-delay:.15s}
+.hfa:nth-child(4){animation-delay:.45s}
+.hfa:nth-child(6){animation-delay:.75s}
+.hfa:nth-child(8){animation-delay:1.05s}
+.hfa:nth-child(10){animation-delay:1.35s}
+.hf-loop{border-color:var(--acc);background:var(--acc2)}
+.hflow-note{font-size:.82rem;color:var(--ink3);margin-bottom:2rem;font-weight:400}
+@media(max-width:960px){.hflow{justify-content:center}.hflow-note{text-align:center}}
+.hctas{display:flex;gap:1rem;flex-wrap:wrap}
+@media(max-width:960px){.hctas{justify-content:center}}
+.hbtn{padding:.95rem 2rem;font-size:.95rem;font-weight:600;border-radius:50px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;border:none}
+.hbtn-p{background:var(--ink);color:#fff}
+.hbtn-p:hover{background:#000;transform:translateY(-1px)}
+.hbtn-s{background:transparent;color:var(--ink);border:1.5px solid var(--linef)}
+.hbtn-s:hover{border-color:var(--ink)}
+.hnote{font-size:.78rem;color:var(--ink3);margin-top:1rem}
+
+/* ── LIVE DASHBOARD (hero right) ── */
+.dash{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shL);overflow:hidden;position:relative}
+.dash-bar{display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border-bottom:1px solid var(--line);background:var(--bg)}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot-r{background:#FF5F57}.dot-y{background:#FFBD2E}.dot-g{background:#28C840}
+.dash-bar span{flex:1;text-align:center;font-size:.7rem;font-weight:500;color:var(--ink3)}
+.dash-body{display:grid;grid-template-columns:1fr .42fr;min-height:340px}
+@media(max-width:600px){.dash-body{grid-template-columns:1fr;min-height:auto}}
+.dash-cal{padding:.8rem;overflow:hidden}
+.dcal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.dcal-head b{font-size:.82rem;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.dcal-head span{font-size:.65rem;color:var(--ink3)}
+.dcal{border-collapse:collapse;width:100%}
+.dcal th{font-size:.58rem;font-weight:600;color:var(--ink3);padding:.3rem .15rem;text-transform:uppercase;letter-spacing:.06em}
+.dcal td{font-size:.65rem;padding:.2rem .1rem;text-align:center;position:relative}
+.dcal .rm{text-align:left;font-weight:600;font-size:.64rem;white-space:nowrap;padding-right:.4rem;color:var(--ink2)}
+.dcal .pr{font-weight:600;font-family:'Space Grotesk',sans-serif;font-size:.68rem;transition:all .4s;cursor:default}
+.dcal .pr.up{color:var(--g)}
+.dcal .pr.dn{color:var(--coral)}
+.dcal .res{display:inline-block;width:calc(100% - 4px);margin:2px;padding:2px 4px;border-radius:4px;font-size:.56rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res-b{background:#E3EDF8;color:#3A5B82}
+.res-d{background:var(--gsoft);color:var(--g)}
+.res-ai{background:var(--yel2);color:var(--sand)}
+.dash-feed{border-left:1px solid var(--line);padding:.8rem;display:flex;flex-direction:column;gap:0;overflow:hidden}
+@media(max-width:600px){.dash-feed{border-left:none;border-top:1px solid var(--line)}}
+.dash-feed b{font-size:.62rem;font-weight:600;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.feed-item{padding:.45rem 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(8px);transition:all .5s}
+.feed-item.show{opacity:1;transform:translateY(0)}
+.feed-item .ft{font-size:.56rem;font-weight:600;color:var(--acc);margin-bottom:.15rem}
+.feed-item .fm{font-size:.66rem;color:var(--ink2);line-height:1.45}
+.feed-item .fh{font-size:.54rem;color:var(--ink3);margin-top:.1rem}
+</style>
+</head>
+<body>
+<nav><div class="nv">
+  <div class="logo">REV<em>IA</em> <span style="font-size:.58rem;font-weight:400;color:var(--ink3);letter-spacing:.02em;margin-left:.4rem">Revenue Intelligence & Automation</span></div>
+  <div class="nlinks">
+    <a href="#que">¿Qué hace?</a>
+    <a href="#pms">El sistema</a>
+    <a href="#ia">La IA</a>
+    <a href="#planes">Planes</a>
+    <a class="nbtn" href="https://wa.me/573150595443?text=Hola,%20quiero%20conocer%20REVIA">Consulta gratuita ↗</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>El primer sistema de gestión hotelera <b>completamente <mark>autónomo.</mark></b></h1>
+      <p class="hflow-note" style="font-size:.95rem;color:var(--ink2);font-weight:300;max-width:480px;margin-bottom:2rem">Un ciclo autónomo que analiza, decide, ejecuta y aprende — sin intervención. Cada paso se alimenta del anterior. Explora el flujo completo abajo.</p>
+      <div class="hctas">
+        <button class="hbtn hbtn-p" onclick="location.href='https://wa.me/573150595443?text=Hola,%20quiero%20probar%20REVIA'">Agendar una demo ↗</button>
+        <button class="hbtn hbtn-s" onclick="location.href='#pms'">Ver en vivo</button>
+      </div>
+      <div class="hnote">20 días de prueba gratuita · Configuración asistida · Sin tarjeta</div>
+    </div>
+    <div class="dash">
+      <div class="dash-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>REVIA · Panel en vivo</span></div>
+      <div class="dash-body">
+        <div class="dash-cal">
+          <div class="dcal-head"><b>Julio 2026</b><span>5 habitaciones</span></div>
+          <table class="dcal" id="heroCal"></table>
+        </div>
+        <div class="dash-feed">
+          <b>Actividad</b>
+          <div id="heroFeed"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── FLUJO CIRCULAR ── -->
+<style>
+.flow-sec{padding:3rem 2rem 4rem;max-width:1200px;margin:0 auto}
+.flow-sec h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:400;text-align:center;margin-bottom:.6rem}
+.flow-sec h2 b{font-weight:600}
+.flow-sec .fsub{text-align:center;font-size:.9rem;color:var(--ink3);margin-bottom:2.5rem}
+.flow-wrap{position:relative;max-width:800px;margin:0 auto}
+.flow-svg{width:100%;height:auto;display:block}
+.flow-svg text{font-family:'Space Grotesk',sans-serif}
+.fnode{cursor:pointer;transition:transform .2s}
+.fnode:hover{transform:scale(1.04)}
+.fnode.active rect,.fnode.active circle{stroke:var(--acc);stroke-width:2.5}
+.flow-detail{max-width:100%;margin:1.4rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:none;animation:fi .35s}
+.flow-detail.show{display:block}
+.fd-head{padding:1.1rem 1.5rem;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:.8rem}
+.fd-head .fd-n{width:36px;height:36px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.fd-head h4{font-size:1.05rem;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.fd-body{display:grid;grid-template-columns:1.1fr .9fr;gap:0}
+@media(max-width:640px){.fd-body{grid-template-columns:1fr}}
+.fd-col{padding:.9rem 1.3rem}
+.fd-col:first-child{border-right:1px solid var(--line)}
+@media(max-width:640px){.fd-col:first-child{border-right:none;border-bottom:1px solid var(--line)}}
+.fd-col h5{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:.7rem}
+.fd-col p{font-size:.88rem;color:var(--ink2);font-weight:300;line-height:1.7}
+.fd-col ul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.fd-col li{font-size:.82rem;color:var(--ink2);font-weight:400;display:flex;align-items:flex-start;gap:.45rem;line-height:1.5}
+.fd-col li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;margin-top:.4rem}
+</style>
+
+<section class="flow-sec" id="flujo">
+  <h2>Así opera REVIA. <b>Un ciclo que nunca se detiene.</b></h2>
+  <p class="fsub">Toca cualquier paso — los puntos verdes que parpadean — y descubre qué datos analiza en cada decisión.</p>
+  <div class="flow-wrap">
+    <svg class="flow-svg" viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="flarr" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="6" orient="auto"><path d="M1 1L8 4L1 7" fill="none" stroke="#1B6B5F" stroke-width="1.5" stroke-linecap="round"/></marker>
+        <style>.fnode rect{transition:all .3s}.fnode:hover rect{fill:#E6F2EF;stroke:#1B6B5F}.pulse-ring{animation:pring 2.5s ease-out infinite}@keyframes pring{0%{r:4;opacity:.8}100%{r:14;opacity:0}}</style>
+      </defs>
+      <!-- arrows -->
+      <path d="M285 80 Q350 45 425 80" fill="none" stroke="#D8D4C8" stroke-width="2" marker-end="url(#flarr)"/>
+      <path d="M570 140 Q610 210 570 280" fill="none" stroke="#D8D4C8" stroke-width="2" marker-end="url(#flarr)"/>
+      <path d="M425 350 Q350 385 285 350" fill="none" stroke="#D8D4C8" stroke-width="2" marker-end="url(#flarr)"/>
+      <path d="M140 280 Q100 210 140 140" fill="none" stroke="#D8D4C8" stroke-width="2" marker-end="url(#flarr)"/>
+      <!-- loop path -->
+      <path d="M560 355 Q630 410 540 440 Q400 470 260 440 Q150 410 140 355" fill="none" stroke="#D8D4C8" stroke-width="1.5" stroke-dasharray="5 4" opacity=".4"/>
+      <!-- center -->
+      <circle cx="350" cy="215" r="38" fill="none" stroke="#EDEDEB" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="350" y="211" text-anchor="middle" font-size="10" fill="#9B9CA2" font-weight="600" letter-spacing=".1em">TU</text>
+      <text x="350" y="225" text-anchor="middle" font-size="10" fill="#9B9CA2" font-weight="600" letter-spacing=".1em">ALOJAMIENTO</text>
+      
+      <!-- NODE 1 -->
+      <g class="fnode" onclick="showFD(0)" data-i="0">
+        <rect x="115" y="60" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="290" cy="60" r="4" fill="#1B6B5F"/><circle cx="290" cy="60" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="135" y="85" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 01</text>
+        <text x="135" y="102" font-size="13" font-weight="600" fill="#1A1B1E">Analiza el entorno</text>
+        <text x="135" y="118" font-size="9.5" fill="#9B9CA2">Mercado, demanda y tendencias</text>
+      </g>
+
+      <!-- NODE 2 -->
+      <g class="fnode" onclick="showFD(1)" data-i="1">
+        <rect x="420" y="60" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="595" cy="60" r="4" fill="#1B6B5F"/><circle cx="595" cy="60" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="440" y="85" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 02</text>
+        <text x="440" y="102" font-size="13" font-weight="600" fill="#1A1B1E">Decide el precio</text>
+        <text x="440" y="118" font-size="9.5" fill="#9B9CA2">El precio justo para cada noche</text>
+      </g>
+
+      <!-- NODE 3 -->
+      <g class="fnode" onclick="showFD(2)" data-i="2">
+        <rect x="490" y="175" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="665" cy="175" r="4" fill="#1B6B5F"/><circle cx="665" cy="175" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="510" y="200" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 03</text>
+        <text x="510" y="217" font-size="13" font-weight="600" fill="#1A1B1E">Atrae huéspedes</text>
+        <text x="510" y="233" font-size="9.5" fill="#9B9CA2">Publicidad que se prende sola</text>
+      </g>
+
+      <!-- NODE 4 -->
+      <g class="fnode" onclick="showFD(3)" data-i="3">
+        <rect x="420" y="290" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="595" cy="290" r="4" fill="#1B6B5F"/><circle cx="595" cy="290" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="440" y="315" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 04</text>
+        <text x="440" y="332" font-size="13" font-weight="600" fill="#1A1B1E">Responde y cierra</text>
+        <text x="440" y="348" font-size="9.5" fill="#9B9CA2">Ventas por chat, 24 horas</text>
+      </g>
+
+      <!-- NODE 5 -->
+      <g class="fnode" onclick="showFD(4)" data-i="4">
+        <rect x="115" y="290" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="290" cy="290" r="4" fill="#1B6B5F"/><circle cx="290" cy="290" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="135" y="315" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 05</text>
+        <text x="135" y="332" font-size="13" font-weight="600" fill="#1A1B1E">Registra y aprende</text>
+        <text x="135" y="348" font-size="9.5" fill="#9B9CA2">Cada resultado mejora el siguiente</text>
+      </g>
+
+      <!-- NODE 6 -->
+      <g class="fnode" onclick="showFD(5)" data-i="5">
+        <rect x="35" y="175" width="175" height="70" rx="12" fill="#FAFAF8" stroke="#EDEDEB" stroke-width="1.5"/>
+        <circle cx="210" cy="175" r="4" fill="#1B6B5F"/><circle cx="210" cy="175" fill="none" stroke="#1B6B5F" stroke-width="1" class="pulse-ring"/>
+        <text x="55" y="200" font-size="10" font-weight="700" fill="#1B6B5F" letter-spacing=".05em">PASO 06</text>
+        <text x="55" y="217" font-size="13" font-weight="600" fill="#1A1B1E">Actualiza canales</text>
+        <text x="55" y="233" font-size="9.5" fill="#9B9CA2">Todo sincronizado al instante</text>
+      </g>
+
+      <text x="350" y="450" text-anchor="middle" font-size="9.5" fill="#9B9CA2" font-weight="500" letter-spacing=".06em">EL CICLO SE REPITE AUTÓNOMAMENTE · 24/7/365</text>
+    </svg>
+    <div class="flow-detail" id="flowDetail"></div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<style>
+.stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:1200px;margin:1rem auto 0;padding:0 2rem}
+@media(max-width:760px){.stats{grid-template-columns:1fr;gap:1px}}
+.st{padding:2.5rem 2rem;text-align:center;border-right:1px solid var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.st:first-child{border-left:1px solid var(--line)}
+@media(max-width:760px){.st{border:1px solid var(--line)}}
+.st b{display:block;font-family:'Space Grotesk',sans-serif;font-size:3.2rem;font-weight:700;line-height:1;margin-bottom:.5rem;color:var(--ink)}
+.st span{font-size:.9rem;color:var(--ink2);font-weight:300}
+</style>
+<section class="stats">
+  <div class="st"><b>24/7</b><span>operando tu alojamiento. Precios, publicidad y ventas sin descanso.</span></div>
+  <div class="st"><b>&lt;1 min</b><span>de respuesta a cada huésped. En hotelería, el primero en responder cierra la venta.</span></div>
+  <div class="st"><b>15–25%</b><span>de comisión que dejas de pagar por cada reserva que entra directo a tu alojamiento.</span></div>
+</section>
+
+<div class="scroll-arr"><span>Descubre cómo funciona</span><span class="chev">↓</span></div>
+
+<!-- ── SECCIÓN OSCURA: LA IA ── -->
+<style>
+.dk{background:var(--ink);color:#fff;padding:5.5rem 2rem}
+.dk .inner{max-width:1200px;margin:0 auto}
+.dk h2{color:#fff;font-weight:300;max-width:700px}
+.dk h2 b{font-weight:600}
+.dk .ld{color:rgba(255,255,255,.55);max-width:600px;margin-bottom:3rem}
+.dk-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:3rem;align-items:start}
+@media(max-width:860px){.dk-grid{grid-template-columns:1fr}}
+.yc{background:var(--yel);color:var(--ink);padding:1.6rem 1.8rem;margin-bottom:1rem}
+.yc b{display:block;font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:.4rem}
+.yc span{font-size:.88rem;font-weight:400}
+.dlist{list-style:none}
+.dlist li{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.92rem;font-weight:300;color:rgba(255,255,255,.8);line-height:1.65}
+.dlist li b{color:#fff;font-weight:500}
+.dlist .dn{flex-shrink:0;font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--yel);font-size:1rem}
+</style>
+<section class="dk" id="ia">
+  <div class="inner">
+    <div class="eyeb" style="color:var(--yel)">La inteligencia detrás</div>
+    <h2>Inteligencia artificial diseñada <b>exclusivamente para la industria del alojamiento.</b></h2>
+    <p class="ld">Cada decisión operativa se fundamenta en los datos reales de tu propiedad, el comportamiento del mercado y tu historial de ventas. Cada acción queda registrada, explicada y auditable en todo momento.</p>
+    <div class="dk-grid">
+      <div>
+        <div class="yc"><b>Miles</b><span>de simulaciones antes de fijar cada precio.</span></div>
+        <div class="yc"><b>100%</b><span>de las decisiones registradas y explicadas.</span></div>
+        <div class="yc"><b>Tú decides</b><span>el nivel de control. Desde aprobar todo hasta autonomía total.</span></div>
+      </div>
+      <ul class="dlist">
+        <li><span class="dn">01</span><span><b>Lee tu mercado completo.</b> Precios de tus competidores, demanda real, tu ocupación y tu historial — todos los días, sin que lo pidas.</span></li>
+        <li><span class="dn">02</span><span><b>Decide con matemática.</b> Simula miles de escenarios y elige el precio que más ingresos te genera esa noche. Sin corazonadas.</span></li>
+        <li><span class="dn">03</span><span><b>Ejecuta sola.</b> Actualiza precios en todos los canales, prende la publicidad cuando hay noches vacías y responde cada consulta al instante.</span></li>
+        <li><span class="dn">04</span><span><b>Te rinde cuentas.</b> Reporte diario, registro de cada decisión, y un chat donde le preguntas lo que sea — y te contesta con tus números.</span></li>
+        <li><span class="dn">05</span><span><b>Aprende de tu negocio.</b> Cada semana conoce mejor tus temporadas, tus huéspedes y tus precios límite. Tu negocio gana memoria.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── SECCIÓN: ¿QUÉ HACE? con tarjetas expandibles ── -->
+<style>
+.sec{padding:5.5rem 2rem;max-width:1200px;margin:0 auto}
+.sec-full{padding:5.5rem 0}
+.eyeb{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
+.sec h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:400;max-width:720px;margin-bottom:1rem;line-height:1.12}
+.sec h2 b{font-weight:600}
+.sec .ld{font-size:1.05rem;color:var(--ink2);font-weight:300;max-width:600px;margin-bottom:2.8rem;line-height:1.8}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.cgrid{grid-template-columns:1fr}}
+.crd{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:2rem;transition:all .25s;cursor:default}
+.crd:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+.crd .ci{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1.1rem;background:var(--acc2);color:var(--acc)}
+.crd h3{font-size:1.1rem;font-weight:600;margin-bottom:.5rem;font-family:'Space Grotesk',sans-serif}
+.crd p{font-size:.88rem;color:var(--ink2);font-weight:300;line-height:1.7}
+.crd .xbtn{display:inline-block;margin-top:.9rem;font-size:.82rem;font-weight:600;color:var(--acc);cursor:pointer;border:none;background:none;padding:0;font-family:'Inter',sans-serif}
+.crd .xbtn:hover{text-decoration:underline}
+.crd .xtra{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.86rem;color:var(--ink2);font-weight:300;line-height:1.7}
+.crd.open .xtra{margin-top:.7rem}
+.xtra b{color:var(--ink);font-weight:500}
+.xtra .vs{margin-top:.8rem;padding:.8rem 1rem;background:var(--corsoft);border-radius:8px;font-size:.84rem}
+.xtra .vs em{font-style:normal;font-weight:500;color:var(--coral);font-size:.72rem;display:block;margin-bottom:.3rem}
+</style>
+<section class="sec" id="que">
+  <div class="eyeb">Módulos integrados</div>
+  <h2>Seis áreas de tu operación que REVIA <b>administra de forma autónoma.</b></h2>
+  <p class="ld">Cada módulo fue diseñado para operar sin intervención manual. No requiere conocimientos técnicos ni experiencia previa en administración hotelera. Explora cada uno:</p>
+  <div class="cgrid" id="cardsGrid"></div>
+</section>
+
+<div class="scroll-arr"><span>Míralo en acción</span><span class="chev">↓</span></div>
+
+<!-- ── PMS INTERACTIVO ── -->
+<style>
+.sec-pms{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:5.5rem 2rem}
+.sec-pms .inner{max-width:1200px;margin:0 auto}
+.pms{border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shL);background:var(--card)}
+.pms-bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:.8rem}
+.pms-bar b{font-size:.92rem;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.tgl-wrap{display:flex;align-items:center;gap:.65rem;font-size:.84rem;font-weight:500;color:var(--ink2)}
+.tgl{position:relative;width:62px;height:32px;background:var(--linef);border-radius:16px;cursor:pointer;border:none;transition:background .3s}
+.tgl.on{background:var(--acc)}
+.tgl::after{content:'';position:absolute;top:3px;left:3px;width:26px;height:26px;background:#fff;border-radius:50%;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tgl.on::after{transform:translateX(30px)}
+.pms-sc{overflow-x:auto}
+.ptbl{border-collapse:collapse;min-width:900px;width:100%}
+.ptbl th,.ptbl td{border:1px solid var(--line);text-align:center;font-size:.72rem;padding:0}
+.ptbl thead th{background:var(--bg);padding:.5rem .25rem;min-width:78px}
+.ptbl .thd{font-weight:700;font-size:.88rem;font-family:'Space Grotesk',sans-serif}
+.ptbl .thm{font-size:.62rem;color:var(--ink3)}
+.ptbl .thocc{display:inline-block;margin-top:.25rem;font-size:.58rem;font-weight:600;padding:.12rem .5rem;border-radius:10px;background:var(--line);color:var(--ink3)}
+.thocc.hot{background:var(--corsoft);color:var(--coral)}
+.thocc.full{background:var(--gsoft);color:var(--g)}
+.rcell{text-align:left;font-weight:600;font-size:.76rem;padding:.6rem .9rem;min-width:140px;position:sticky;left:0;z-index:2;background:var(--bg)}
+.rcell span{display:block;font-weight:300;font-size:.62rem;color:var(--ink3)}
+.pcell{padding:.45rem .15rem;cursor:pointer;transition:background .15s}
+.pcell:hover{background:var(--yel2)}
+.pcell .pv{font-weight:700;font-family:'Space Grotesk',sans-serif;font-size:.74rem}
+.pv.up{color:var(--g)}.pv.dn{color:var(--coral)}
+.pcell .pc{display:block;font-size:.56rem;color:var(--ink3)}
+.rscell{padding:0}
+.rsblk{margin:3px;padding:.35rem .5rem;border-radius:5px;font-size:.64rem;font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:filter .15s}
+.rsblk:hover{filter:brightness(.93)}
+.rs-ota{background:#E1E9F3;color:#3B5D85}
+.rs-dir{background:var(--gsoft);color:var(--g)}
+.rs-ai{background:var(--yel);color:var(--ink)}
+.rs-blk{background:var(--line);color:var(--ink3)}
+.pleg{display:flex;gap:1.2rem;flex-wrap:wrap;padding:.75rem 1.4rem;border-top:1px solid var(--line);font-size:.68rem;color:var(--ink3)}
+.pleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.3rem;vertical-align:-1px}
+.pex{border-top:1px solid var(--line);padding:1.2rem 1.4rem;background:var(--acc2);display:none}
+.pex.show{display:block;animation:fi .35s}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.pex h5{font-size:.86rem;margin-bottom:.3rem;font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--acc3)}
+.pex p{font-size:.86rem;color:var(--ink2);font-weight:300}
+.plog{border-top:1px solid var(--line);background:var(--bg);padding:1rem 1.4rem}
+.plog .plt{font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.li{display:flex;gap:.55rem;align-items:flex-start;font-size:.82rem;color:var(--ink2);font-weight:300;padding:.3rem 0;opacity:0;animation:fi .5s forwards}
+.li .lt{flex-shrink:0;font-size:.58rem;font-weight:700;padding:.14rem .5rem;border-radius:4px;background:var(--yel);color:var(--ink);margin-top:.15rem}
+/* FLECHA PARPADEANTE */
+.blink-arrow{display:inline-flex;align-items:center;gap:.5rem;animation:blinker 1s ease-in-out infinite;color:var(--acc);font-size:1rem;font-weight:700;pointer-events:none;position:absolute;right:-16px;top:50%;transform:translateY(-50%);background:var(--yel);padding:.4rem .8rem;border-radius:20px;color:var(--ink)}
+.blink-arrow::before{content:'👉';font-size:1.3rem}
+@keyframes blinker{0%,100%{opacity:1}50%{opacity:.2}}
+.tgl-wrap{position:relative}
+/* SCROLL ARROW */
+.scroll-arr{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:2rem 0;animation:bob 2s ease-in-out infinite}
+.scroll-arr span{font-size:.78rem;font-weight:500;color:var(--ink3)}
+.scroll-arr .chev{font-size:1.2rem;color:var(--acc)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+</style>
+<section class="sec-pms" id="pms">
+  <div class="inner">
+    <div class="eyeb">Tu panel de control</div>
+    <h2>Así se ve tu alojamiento <b>por dentro.</b></h2>
+    <p class="ld">Haz clic en cualquier precio o reserva. Activa la inteligencia autónoma y mira la diferencia.</p>
+    <div class="pms">
+      <div class="pms-bar">
+        <b>Calendario · Hotel Demo</b>
+        <div class="tgl-wrap"><span>Inteligencia autónoma</span><button class="tgl" id="btgl" onclick="tB();document.querySelector('.blink-arrow')?.remove()"></button><span class="blink-arrow">Actívala</span></div>
+      </div>
+      <div class="pms-sc"><table class="ptbl" id="ptbl"></table></div>
+      <div class="pleg">
+        <span><i style="background:#E1E9F3"></i>Portal (Booking, etc.)</span>
+        <span><i style="background:var(--gsoft)"></i>Directa · sin comisión</span>
+        <span><i style="background:var(--yel)"></i>Cerrada por la IA</span>
+        <span><i style="background:var(--line)"></i>Bloqueada</span>
+      </div>
+      <div class="pex" id="pex"></div>
+      <div class="plog"><div class="plt">Registro de decisiones</div><div id="plg"><div class="li" style="opacity:1;color:var(--ink3)">Activa la inteligencia para ver las decisiones en vivo…</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLANES ── -->
+<style>
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.pln{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:1.7rem;transition:all .25s;position:relative}
+.pln:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+.pln.star{border-color:var(--ink)}
+.pln .badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;padding:.22rem .8rem;border-radius:50px;text-transform:uppercase;white-space:nowrap}
+.pln h3{font-size:1rem;font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:.15rem}
+.pln .pp{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:var(--acc);margin:.4rem 0 .2rem}
+.pln .pp small{font-size:.76rem;color:var(--ink3);font-weight:400;font-family:'Inter',sans-serif}
+.pln p{font-size:.8rem;color:var(--ink2);font-weight:300}
+.cta-f{text-align:center;padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.cta-f h2{font-weight:300;max-width:700px;margin:0 auto 1rem}
+.cta-f h2 b{font-weight:600}
+.cta-f p{font-size:1.05rem;color:var(--ink2);font-weight:300;max-width:520px;margin:0 auto 2rem}
+</style>
+<section class="sec" id="planes">
+  <div class="eyeb">Planes 2026</div>
+  <h2>La misma inteligencia para todos. <b>Al tamaño de tu operación.</b></h2>
+  <p class="ld">Todos los planes incluyen el sistema completo. Solo cambia cuántas unidades administra.</p>
+  <div class="plans">
+    <div class="pln"><h3>🏡 Host</h3><div class="pp">$210.000<small> /mes</small></div><p>Cabañas, apartamentos, glampings y fincas. 1–5 unidades.</p></div>
+    <div class="pln"><h3>🏨 Hotels</h3><div class="pp">$370.000<small> /mes</small></div><p>Hoteles boutique, glampings. 6–15 unidades.</p></div>
+    <div class="pln star"><span class="badge">Más elegido</span><h3>🏛 Managers</h3><div class="pp">$610.000<small> /mes</small></div><p>Hoteles medianos. 16–30 unidades.</p></div>
+    <div class="pln"><h3>🏘 Max</h3><div class="pp">$910.000<small> /mes</small></div><p>2–5 propiedades. Hasta 50 unidades.</p></div>
+    <div class="pln"><h3>🏢 Portfolio</h3><div class="pp">$2.490.000<small> /mes</small></div><p>6–15 propiedades. Hasta 150 unidades.</p></div>
+    <div class="pln"><h3>🌐 Enterprise</h3><div class="pp">Desde $4.990.000</div><p>16+ propiedades. Marca blanca.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:2.2rem">
+    <button class="hbtn hbtn-p" onclick="location.href='https://wa.me/573150595443?text=Hola,%20quiero%20el%20cupo%20beta'">Solicitar cupo beta · 20% OFF ↗</button>
+    <div class="hnote" style="margin-top:.7rem">Solo 10 cupos · 20 días de prueba gratuita</div>
+  </div>
+</section>
+
+<section class="cta-f">
+  <h2>Mientras lees esto, hay alojamientos en tu zona <b>vendiendo las noches que tú tienes <mark>vacías.</mark></b></h2>
+  <p>La diferencia entre ellos y tú no es la ubicación ni las instalaciones — es que ellos tienen un sistema que ajusta precios, activa publicidad y cierra ventas las 24 horas. REVIA es ese sistema.</p>
+  <button class="hbtn hbtn-p" onclick="location.href='https://wa.me/573150595443?text=Hola,%20quiero%20probar%20REVIA'">Quiero probarlo ↗</button>
+</section>
+
+<footer style="text-align:center;padding:2.5rem 2rem;font-size:.78rem;color:var(--ink3);border-top:1px solid var(--line)">
+  <b style="color:var(--ink);font-family:'Space Grotesk',sans-serif">REVIA</b> · Alojamientos turísticos · LATAM
+</footer>
+
+<!-- ── BELPA DOCK ── -->
+<style>
+#bBtn{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;align-items:center;gap:.6rem;background:var(--ink);color:#fff;border:none;padding:.8rem 1.3rem;border-radius:50px;font-weight:600;font-size:.86rem;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.25);font-family:'Inter',sans-serif;transition:all .2s}
+#bBtn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+#bBtn .bd{width:9px;height:9px;border-radius:50%;background:var(--yel);animation:pl 2s infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+#bP{position:fixed;bottom:24px;right:24px;z-index:301;width:min(380px,calc(100vw - 32px));background:var(--card);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.2);display:none;flex-direction:column;overflow:hidden;max-height:min(580px,calc(100vh - 60px));border:1px solid var(--line)}
+#bP.show{display:flex}
+.bph{background:var(--ink);color:#fff;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between}
+.bph .bpw{display:flex;align-items:center;gap:.65rem}
+.bph .bav{width:36px;height:36px;border-radius:50%;background:var(--yel);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;font-family:'Space Grotesk',sans-serif}
+.bph b{font-size:.88rem;display:block}
+.bph span{font-size:.66rem;color:var(--yel)}
+.bph .bx{background:none;border:none;color:rgba(255,255,255,.6);font-size:1.3rem;cursor:pointer;padding:0 .3rem}
+.bph .bx:hover{color:#fff}
+.bpb{padding:1.1rem;display:flex;flex-direction:column;gap:.7rem;overflow-y:auto;flex:1;background:var(--bg)}
+.bm{max-width:88%;padding:.65rem .9rem;border-radius:14px;font-size:.84rem;line-height:1.6;font-weight:300;opacity:0;animation:fi .35s forwards}
+.bm-u{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:4px;font-weight:400}
+.bm-a{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bm-a b{font-weight:500;color:var(--ink)}
+.bpc{padding:.8rem 1rem;border-top:1px solid var(--line);display:flex;gap:.45rem;flex-wrap:wrap;background:var(--card)}
+.bc{font-size:.74rem;padding:.42rem .85rem;border-radius:50px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-family:'Inter',sans-serif;color:var(--ink2);transition:all .2s;font-weight:400}
+.bc:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+.bc:disabled{opacity:.3;cursor:default}
+</style>
+
+<a id="waBtn" href="https://wa.me/573150595443?text=Hola,%20quiero%20conocer%20REVIA%20para%20mi%20alojamiento" target="_blank" style="position:fixed;bottom:24px;left:24px;z-index:300;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);transition:transform .2s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.496A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.319 0-4.476-.748-6.235-2.017l-.373-.277-3.07 1.03 1.03-3.07-.277-.373A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
+<button id="bBtn" onclick="bO()"><span class="bd"></span>Habla con BELPA</button>
+<div id="bP" role="dialog">
+  <div class="bph"><div class="bpw"><div class="bav">B</div><div><b>BELPA</b><span>● Conectada a hotel demo</span></div></div><button class="bx" onclick="bC()">×</button></div>
+  <div class="bpb" id="bB"><div class="bm bm-a" style="opacity:1">Soy BELPA, la inteligencia artificial de REVIA. A diferencia de otros asistentes del mercado, no estoy aquí para agendar demos — estoy conectada a un hotel real y <b>lo opero en tiempo real</b>. Hazme una pregunta que ningún otro software puede responder:</div></div>
+  <div class="bpc" id="bC"></div>
+</div>
+
+<script>
+/* ═══ FLUJO CIRCULAR ═══ */
+const FD=[
+{n:"01",t:"Analiza todo lo que rodea tu alojamiento",
+ que:"REVIA no solo mira qué hace tu competencia — analiza el panorama completo: cuánta gente está buscando alojamiento en tu zona, qué clima se espera, si hay eventos o festivos, y cómo se ha comportado la demanda en fechas similares. Todo esto ocurre de forma continua, sin que tengas que buscar nada.",
+ datos:["Cuántas personas están buscando hospedaje en tu zona ahora mismo","Qué precios tiene cada uno de tus competidores directos, día por día","Si se acerca un evento, un festivo o un puente que aumente la demanda","El clima esperado para los próximos días en tu destino","Tu historial: qué noches se te llenaron antes y a qué precio","Qué tan rápido se están vendiendo las noches de las próximas semanas"]},
+{n:"02",t:"Calcula el precio justo de cada noche",
+ que:"Con toda esa información, REVIA simula miles de escenarios para responder una pregunta: ¿a qué precio se maximiza el ingreso de esta noche? No es un número inventado — es el resultado de probar virtualmente qué pasa si subes, si bajas, si mantienes. Y se actualiza solo cada vez que algo cambia.",
+ datos:["Simulación de miles de escenarios para ver qué precio genera más ingreso","Cuánto están dispuestos a pagar tus huéspedes según tu propio historial de ventas","El mínimo que tú defines: el sistema nunca vende por debajo de lo que tú autorices","Si es un día normal, un fin de semana, un puente o un festivo — cada uno tiene su valor","Si la noche se está vendiendo rápido o lento comparado con fechas similares","Qué están cobrando tus competidores para esas mismas fechas"]},
+{n:"03",t:"Activa publicidad solo cuando hace falta",
+ que:"Si el sistema detecta que tienes noches vacías que necesitan venderse, activa anuncios en Google y redes sociales dirigidos a viajeros que están buscando alojamiento en tu zona. Cuando esas noches se llenan, la publicidad se apaga sola. No gastas un peso de más.",
+ datos:["Qué noches de tu calendario necesitan impulso urgente","Cuánto invertir por día — siempre dentro del límite que tú pongas","A qué tipo de viajero mostrarle el anuncio según tu zona y tu alojamiento","Desde qué ciudades te visitan más para apuntar la publicidad allí","Qué anuncios anteriores realmente terminaron en reservas y cuáles no","Cuánto te cuesta conseguir una reserva por publicidad vs. lo que pagarías en comisión a un portal"]},
+{n:"04",t:"Responde al huésped y cierra la venta",
+ que:"Cuando alguien escribe preguntando por tu alojamiento — a las 2 de la tarde o a las 11 de la noche — REVIA le responde en segundos con la disponibilidad real, el precio correcto del día y toda la información que necesita. Si el huésped quiere reservar, el sistema prepara el cierre y tú lo apruebas con un toque desde tu celular.",
+ datos:["Disponibilidad real de cada habitación en el momento exacto de la consulta","El precio que corresponde a ese día según todo el análisis del paso 2","Cuántas personas caben en cada habitación vs. cuántas necesita el huésped","Las condiciones de tu alojamiento: cancelación, horarios, servicios incluidos","Si ese huésped ya se ha hospedado contigo antes","La propuesta de cierre que llega a tu celular para que apruebes o ajustes"]},
+{n:"05",t:"Registra el resultado y mejora el siguiente ciclo",
+ que:"Cada reserva, cada precio que funcionó (o no funcionó), cada anuncio que trajo un huésped real — todo queda registrado. El sistema compara lo que predijo con lo que realmente pasó, y con eso afina sus decisiones futuras. Tu alojamiento acumula experiencia operativa que antes solo existía en tu cabeza.",
+ datos:["Si el precio que puso funcionó o si la noche quedó vacía — y por qué","Por qué canal llegó cada reserva: directa, por portal o cerrada por la IA","Cuánto generó realmente cada reserva comparado con lo que se esperaba","Cuánto tiempo tardó en venderse cada noche desde que se publicó el precio","De dónde vienen tus huéspedes, cuánto se quedan y con cuánta anticipación reservan","Un resumen diario que llega a tu correo explicando todo lo que pasó y por qué"]},
+{n:"06",t:"Actualiza todos tus canales al instante",
+ que:"Cada cambio de precio, cada reserva nueva y cada bloqueo que hagas se refleja inmediatamente en todos los lugares donde vendes: tu propio motor de reservas, los portales como Booking o Airbnb, y tu perfil en Google. No tienes que entrar a cada plataforma a actualizar nada — todo se sincroniza solo.",
+ datos:["Los nuevos precios se publican en todos los portales conectados al mismo tiempo","Si alguien reserva en un portal, esa noche se bloquea instantáneamente en los demás","Tu motor de reservas directo siempre muestra el precio actualizado por la IA","Tu perfil en Google Hotels refleja la disponibilidad y tarifa en tiempo real","Los bloqueos por mantenimiento o uso personal se respetan en todos los canales","Toda la información de la nueva reserva entra al sistema y alimenta el próximo ciclo de análisis"]}
+];
+function showFD(i){
+  const f=FD[i];
+  const el=document.getElementById('flowDetail');
+  document.querySelectorAll('.fnode').forEach(n=>n.classList.remove('active'));
+  document.querySelector(`.fnode[data-i="${i}"]`).classList.add('active');
+  let dl='';f.datos.forEach(d=>dl+=`<li>${d}</li>`);
+  el.innerHTML=`<div class="fd-head"><span class="fd-n">${f.n}</span><h4>${f.t}</h4></div><div class="fd-body"><div class="fd-col"><h5>Qué hace en este paso</h5><p>${f.que}</p></div><div class="fd-col"><h5>Datos que analiza para decidir</h5><ul>${dl}</ul></div></div>`;
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ═══ HERO ANIMATED DASHBOARD ═══ */
+const HD=[{d:22,w:"Mi"},{d:23,w:"Ju"},{d:24,w:"Vi"},{d:25,w:"Sá"},{d:26,w:"Do"},{d:27,w:"Lu"},{d:28,w:"Ma"},{d:29,w:"Mi"},{d:30,w:"Ju"},{d:31,w:"Vi"}];
+const HR=[
+ {n:"Hab 1",b:160,r:{2:{t:"Carlos",c:"res-b",s:2},7:{t:"Bloq",c:"",s:1}}},
+ {n:"Hab 2",b:190,r:{0:{t:"Ana P.",c:"res-d",s:3},9:{t:"Luisa",c:"res-b",s:1}}},
+ {n:"Hab 3",b:160,r:{4:{t:"Jorge",c:"res-ai",s:2}}},
+ {n:"Hab 4",b:230,r:{9:{t:"Marta",c:"res-d",s:1}}},
+ {n:"Hab 5",b:160,r:{}}
+];
+function heroGrid(){
+  let h='<thead><tr><th class="rm"></th>';
+  HD.forEach(d=>h+=`<th><span style="font-weight:600">${d.d}</span><br><span style="font-size:.52rem;color:var(--ink3)">${d.w}</span></th>`);
+  h+='</tr></thead><tbody>';
+  HR.forEach(r=>{
+    h+=`<tr><td class="rm">${r.n}</td>`;
+    let sk=0;
+    HD.forEach((d,i)=>{
+      if(sk>0){sk--;return;}
+      const rs=r.r[i];
+      if(rs){
+        const cls=rs.c?rs.c:'';
+        const bg=cls==='res-b'?'#E3EDF8':(cls==='res-d'?'var(--gsoft)':'var(--yel2)');
+        const co=cls==='res-b'?'#3A5B82':(cls==='res-d'?'var(--g)':'var(--sand)');
+        if(!rs.c){h+=`<td style="background:var(--line);font-size:.5rem;color:var(--ink3)" colspan="${rs.s}">—</td>`;}
+        else{h+=`<td colspan="${rs.s}"><span class="res" style="background:${bg};color:${co}">${rs.t}</span></td>`;}
+        sk=rs.s-1;
+      }else{
+        const mul=[1,1,1.3,1.35,1.1,1,1,.85,1,1.5][i];
+        const p=Math.round(r.b*mul);
+        const cls=mul>1.15?'up':(mul<1?'dn':'');
+        h+=`<td><span class="pr ${cls}">$${p}K</span></td>`;
+      }
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('heroCal').innerHTML=h;
+}
+heroGrid();
+const FEED=[
+  {t:"Precio",m:"Sábado 25: subí a $216K (+35%). Demanda alta confirmada.",h:"Hace 2 min"},
+  {t:"Reserva",m:"Jorge R. confirmó 2 noches por el chat. Sin comisión.",h:"Hace 18 min"},
+  {t:"Campaña",m:"Google Ads activada: 3 habitaciones vacías la próxima semana.",h:"Hace 1 hora"},
+  {t:"Precio",m:"Miércoles 29: promoción puntual $136K. 0% de ocupación.",h:"Hace 3 horas"},
+  {t:"Reporte",m:"Ingreso del mes: $8.4M (+23% vs año anterior).",h:"Hace 6 horas"}
+];
+const hf=document.getElementById('heroFeed');
+FEED.forEach((f,i)=>{
+  const d=document.createElement('div');d.className='feed-item';
+  d.innerHTML=`<div class="ft">${f.t}</div><div class="fm">${f.m}</div><div class="fh">${f.h}</div>`;
+  hf.appendChild(d);
+  setTimeout(()=>d.classList.add('show'),400+i*600);
+});
+
+/* ═══ CARDS ═══ */
+const CARDS=[
+ {i:"📋",t:"Gestión de reservas",d:"Tu calendario, huéspedes, pagos y facturación en un solo lugar.",
+  x:"Se acabó cuadrar reservas a mano. Cada reserva entra sola al calendario. <b>Cero sobreventa, cero huéspedes cruzados.</b>",
+  v:"Sin sistema, pasas reservas de un lado a otro y aún así se te cruzan dos huéspedes en la misma habitación."},
+ {i:"🔄",t:"Conexión con portales",d:"Booking, Airbnb y más — sincronizados en tiempo real.",
+  x:"Cuando alguien reserva en un portal, tu calendario se actualiza al instante en todos. <b>Nunca más vendes dos veces la misma noche.</b>",
+  v:"Sin sincronización, cada reserva es un riesgo de sobreventa — y una mala reseña que destruye tu reputación."},
+ {i:"🛒",t:"Motor de reservas propio",d:"Tu propia página donde los huéspedes reservan directo — sin intermediarios.",
+  x:"Cada reserva por portal te cuesta 15-25% de comisión. Por tu motor: <b>$0.</b> Ese dinero se queda contigo.",
+  v:"Sin canal directo, dependes de los portales y les pagas comisión por cada reserva. Para siempre."},
+ {i:"📈",t:"Precios inteligentes",d:"El precio de cada noche se calcula y ajusta solo, según la demanda real.",
+  x:"Un sábado de puente vale más que un miércoles de temporada baja. <b>Cobras más cuando puedes, llenas cuando necesitas.</b>",
+  v:"Un precio fijo todo el año: regalas tus mejores fechas y espantas huéspedes en las flojas."},
+ {i:"💬",t:"Ventas por chat",d:"La IA responde al instante, cotiza con el precio real y cierra la reserva.",
+  x:"El huésped de las 10pm le escribió a tres más. <b>Reserva con el primero que responde bien.</b> Ese siempre eres tú.",
+  v:"Cada consulta sin responder a tiempo es una reserva que se fue a la competencia."},
+ {i:"📣",t:"Publicidad autónoma",d:"Tu inversión en Google y redes se enciende cuando tienes noches vacías, se apaga cuando vendiste.",
+  x:"<b>Invierte fuerte cuando hay habitaciones por vender y frena cuando no.</b> Cada peso va donde produce.",
+  v:"La publicidad manual gasta lo mismo el mes lleno que el mes vacío. Dinero al vacío."}
+];
+const cg=document.getElementById('cardsGrid');
+CARDS.forEach(c=>{
+  const d=document.createElement('div');d.className='crd';
+  d.innerHTML=`<div class="ci">${c.i}</div><h3>${c.t}</h3><p>${c.d}</p><button class="xbtn" onclick="xC(this)">¿Para qué me sirve? ↓</button><div class="xtra"><p>${c.x}</p><div class="vs"><em>Lo que te cuesta no tenerlo</em>${c.v}</div></div>`;
+  cg.appendChild(d);
+});
+function xC(btn){const c=btn.closest('.crd'),x=c.querySelector('.xtra'),o=c.classList.contains('open');
+  document.querySelectorAll('.crd.open').forEach(e=>{e.classList.remove('open');e.querySelector('.xtra').style.maxHeight=null;e.querySelector('.xbtn').textContent='¿Para qué me sirve? ↓';});
+  if(!o){c.classList.add('open');x.style.maxHeight=x.scrollHeight+'px';btn.textContent='Cerrar ↑';}}
+
+/* ═══ PMS INTERACTIVO ═══ */
+const DY=[{d:22,w:"Mié",o:40},{d:23,w:"Jue",o:40},{d:24,w:"Vie",o:80,h:1},{d:25,w:"Sáb",o:80,h:1},{d:26,w:"Dom",o:60},{d:27,w:"Lun",o:20},{d:28,w:"Mar",o:20},{d:29,w:"Mié",o:0,c:1},{d:30,w:"Jue",o:20},{d:31,w:"Vie",o:100,f:1}];
+const RM=[
+ {n:"Habitación 1",t:"Doble · 2p",b:160,r:{2:{t:"Carlos M. · Portal",c:"rs-ota",s:2},7:{t:"Bloqueada",c:"rs-blk",s:1}}},
+ {n:"Habitación 2",t:"Familiar · 4p",b:190,r:{0:{t:"Ana P. · Directa",c:"rs-dir",s:3},9:{t:"Luisa G. · Portal",c:"rs-ota",s:1}}},
+ {n:"Habitación 3",t:"Doble · 3p",b:160,r:{4:{t:"Jorge R. · IA ✓",c:"rs-ai",s:2}}},
+ {n:"Habitación 4",t:"Suite · 4p",b:230,r:{9:{t:"Marta L. · Directa",c:"rs-dir",s:1}}},
+ {n:"Habitación 5",t:"Doble · 2p",b:160,r:{}}
+];
+let bOn=false;
+function pF(r,d){if(!bOn)return{v:r.b,c:"",g:""};if(d.h)return{v:Math.round(r.b*1.35),c:"up",g:"▲ demanda"};if(d.f)return{v:Math.round(r.b*1.5),c:"up",g:"▲ lleno"};if(d.c)return{v:Math.round(r.b*.85),c:"dn",g:"▼ promo"};return{v:r.b,c:"",g:"óptimo"};}
+function rG(){const g=document.getElementById('ptbl');let h='<thead><tr><th class="rcell">Habitaciones</th>';
+  DY.forEach(d=>{const oc=d.h?'hot':(d.f?'full':'');h+=`<th><span class="thd">${d.d}</span><span class="thm"> Jul·${d.w}</span><br><span class="thocc ${oc}">${d.o}%</span></th>`;});
+  h+='</tr></thead><tbody>';
+  RM.forEach((r,ri)=>{h+=`<tr><td class="rcell">${r.n}<span>${r.t}</span></td>`;let sk=0;
+    DY.forEach((d,di)=>{if(sk>0){sk--;return;}const rs=r.r[di];
+      if(rs){const mp={"rs-ota":"#E1E9F3;color:#3B5D85","rs-dir":"var(--gsoft);color:var(--g)","rs-ai":"var(--yel);color:var(--ink)","rs-blk":"var(--line);color:var(--ink3)"};
+        h+=`<td class="rscell" colspan="${rs.s}"><div class="rsblk" style="background:${(mp[rs.c]||'').split(';')[0]};${(mp[rs.c]||'').split(';')[1]||''}" onclick="eR('${rs.c}','${rs.t.replace(/'/g,"")}')">${rs.t}</div></td>`;sk=rs.s-1;}
+      else{const p=pF(r,d);h+=`<td class="pcell" onclick="eP(${ri},${di})"><span class="pv ${p.c}">$${p.v}K</span><span class="pc">${p.g}</span></td>`;}});
+    h+='</tr>';});
+  h+='</tbody>';g.innerHTML=h;}
+function eP(ri,di){const r=RM[ri],d=DY[di],p=pF(r,d);let w;
+  if(!bOn)w=`Precio fijo en $${r.b}.000 todos los días — así opera sin inteligencia de precios. Activa el interruptor y mira la diferencia.`;
+  else if(d.h)w=`${d.w} ${d.d}: alta demanda (${d.o}%). Subí de $${r.b}K a $${p.v}K porque hay más gente buscando que habitaciones libres. Cobrar lo de siempre ese día es regalar dinero.`;
+  else if(d.f)w=`${d.w} ${d.d}: casi lleno. Subí a $${p.v}K para las últimas habitaciones — son las más valiosas del calendario.`;
+  else if(d.c)w=`${d.w} ${d.d}: 0% de ocupación. Promoción puntual a $${p.v}K solo ese día para captar al viajero de última hora.`;
+  else w=`${d.w} ${d.d}: demanda normal. Precio base $${p.v}K — los datos no justifican moverlo.`;
+  sE(`${r.n} — ${d.w} ${d.d} de julio`,w);}
+function eR(c,t){const m={"rs-ota":"Reserva de portal. Venta válida, pero con comisión del 15-25%. REVIA trabaja para que cada vez más reservas sean directas.","rs-dir":"Reserva directa: sin intermediarios, comisión $0. Cada una deja en tu bolsillo lo que un portal habría cobrado.","rs-ai":"Cerrada por la IA: el huésped escribió, ella respondió al instante, cotizó con el precio correcto y confirmó — con tu aprobación.","rs-blk":"Bloqueada — mantenimiento o decisión tuya. La IA jamás vende una habitación bloqueada."};sE(t,m[c]||"");}
+function sE(t,x){const e=document.getElementById('pex');e.innerHTML=`<h5>${t}</h5><p>${x}</p>`;e.classList.add('show');}
+function tB(){bOn=!bOn;document.getElementById('btgl').classList.toggle('on',bOn);rG();
+  const l=document.getElementById('plg');
+  if(bOn){l.innerHTML='';
+    [["Analizó","Revisé la ocupación de los próximos 10 días, los precios de tu competencia y tu historial."],["Subió","Viernes 24 y sábado 25: demanda alta. Precio +35%."],["Subió","Viernes 31: casi lleno. Precio +50% para las últimas habitaciones."],["Promo","Miércoles 29: 0% ocupación. Promoción puntual -15%."],["Mantuvo","Resto de días: precio base. No mover también es una decisión con datos."]]
+    .forEach((it,i)=>{setTimeout(()=>{const d=document.createElement('div');d.className='li';d.innerHTML=`<span class="lt">${it[0]}</span><span>${it[1]}</span>`;l.appendChild(d);},i*600);});
+  }else{l.innerHTML='<div class="li" style="opacity:1;color:var(--ink3)">Inteligencia desactivada. Precios en modo fijo.</div>';document.getElementById('pex').classList.remove('show');}}
+rG();
+
+/* ═══ BELPA DOCK ═══ */
+const BQ=[
+ {q:"¿A cuánto pongo mi tarifa este sábado?",a:"Ocupación al 80%, dos competidores ya llenos. Tarifa recomendada: <b>$216.000</b> (+35%). Ya la apliqué en todos los canales. ¿Por qué? Simulé miles de escenarios con tu historial: a $216K la probabilidad de vender sigue alta y el ingreso es máximo. <b>Esto es lo que un chatbot de ventas no puede hacer.</b>"},
+ {q:"¿Por qué subiste el precio ayer a las 3am?",a:"A las 2:47am el último competidor con disponibilidad se llenó. Subí tu tarifa 18% a las 3:02am. Resultado: <b>2 reservas confirmadas esta mañana al precio nuevo.</b> Cada decisión queda registrada con hora, razón y resultado."},
+ {q:"¿Cuánta plata me hice este mes?",a:"Llevas <b>$8.450.000</b> en reservas — 23% más que el año pasado. $3.200.000 fueron directas sin comisión: te ahorraste ~$580.000 en comisiones. <b>Faltan 6 noches para superar tu mejor mes.</b>"},
+ {q:"¿Y si te equivocas?",a:"Tres protecciones: <b>(1)</b> Modo supervisado — te propongo y tú apruebas. <b>(2)</b> Pisos y techos que tú defines. <b>(3)</b> Todo registrado — pregúntame el porqué de cualquier decisión. La confianza se construye con transparencia."}
+];
+function bO(){document.getElementById('bP').classList.add('show');document.getElementById('bBtn').style.display='none';}
+function bC(){document.getElementById('bP').classList.remove('show');document.getElementById('bBtn').style.display='flex';}
+const bc=document.getElementById('bC'),bb=document.getElementById('bB');
+BQ.forEach(q=>{const c=document.createElement('button');c.className='bc';c.textContent=q.q;
+  c.onclick=()=>{c.disabled=true;const u=document.createElement('div');u.className='bm bm-u';u.textContent=q.q;bb.appendChild(u);
+    setTimeout(()=>{const a=document.createElement('div');a.className='bm bm-a';a.innerHTML=q.a;bb.appendChild(a);bb.scrollTop=bb.scrollHeight;},550);bb.scrollTop=bb.scrollHeight;};
+  bc.appendChild(c);});
+</script>
+</body>
+</html>
