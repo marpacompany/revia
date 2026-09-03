@@ -1,0 +1,23 @@
+# Normalización de finales de línea.
+# En el repositorio TODO el texto se guarda con LF; en disco también LF.
+# Así se evita el churn CRLF<->LF en Windows y los avisos
+# "LF will be replaced by CRLF the next time Git touches it", sin depender
+# de la config local de cada quien (core.autocrlf).
+* text=auto eol=lf
+
+# Binarios: Git no debe convertir ni hacer diff de estos.
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.webp    binary
+*.ico     binary
+*.pdf     binary
+*.zip     binary
+*.gz      binary
+*.woff    binary
+*.woff2   binary
+*.ttf     binary
+*.eot     binary
+*.db      binary
+*.sqlite3 binary
